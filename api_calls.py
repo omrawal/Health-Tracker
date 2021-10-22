@@ -10,9 +10,9 @@ headers = {
 }
 
 
-def getStats(heightInCms, WeightInKg, age, gender='male'):
+def getStats(heightInCms, weightInKg, age, gender='male'):
     payload = "height="+str(heightInCms)+"&weight=" + \
-        str(WeightInKg)+"&age="+str(age)+"&gender="+str(gender)
+        str(weightInKg)+"&age="+str(age)+"&gender="+str(gender)
 
     response = requests.request(
         "POST", url, data=payload, headers=headers).json()
@@ -39,4 +39,4 @@ def getStats(heightInCms, WeightInKg, age, gender='male'):
     return(final_stats)
 
 
-print(getStats(183, 89, 21, 'male'))
+print(getStats(heightInCms=813, weightInKg=89, age=21, gender='male'))
