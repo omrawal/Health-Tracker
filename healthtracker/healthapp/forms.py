@@ -5,4 +5,5 @@ from .models import Statistic
 class StatisticCreate(forms.ModelForm):
     class Meta:
         model = Statistic
-        fields = '__all__'
+        fields = ('weight', 'height', 'age', 'gender', 'user')
+        # fields = '__all__'

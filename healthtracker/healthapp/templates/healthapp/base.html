@@ -52,6 +52,7 @@
             </ul>
             {% if request.user.is_authenticated%}
             <!-- {{request}} -->
+            {{request.user.username}}
             <span class="nav-item">
                 <a class="nav-link" href="/logout">Logout</a>
             </span>

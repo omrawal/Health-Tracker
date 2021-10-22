@@ -27,7 +27,7 @@ def loginPage(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('index')
+                return redirect('progress')
             else:
                 messages.info(request, 'Username OR password is incorrect')
 
@@ -60,19 +60,22 @@ def registerPage(request):
 
 @login_required(login_url='login')
 def progressPage(request):
-    context = {}
+    context = {
+        'stats': Statistic.objects.filter(user=request.user)
+    }
+    # return render(request, 'index.html', context)
     return render(request, 'progress.html', context)
 
 
 @login_required(login_url='login')
 def addStatsPage(request):
-    upload = StatisticCreate()
+    upload = StatisticCreate(initial={'user': request.user})
     if request.method == 'POST':
         upload = StatisticCreate(request.POST, request.FILES)
         if upload.is_valid():
             upload.save()
             return redirect('index')
         else:
-            return HttpResponse("""your form is wrong, reload on <a href = "{{ url : 'index'}}">reload</a>""")
+            return HttpResponse("your form is wrong, reload on <a href = '/'>reload</a>")
     else:
         return render(request, 'addstats.html', {'upload_form': upload})
