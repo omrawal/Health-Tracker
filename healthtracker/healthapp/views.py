@@ -10,9 +10,6 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from .api_calls import getStats
 # Create your views here.
-# SUPERUSER credentails
-# username = admin
-# password = admin143
 
 
 def index(request):
