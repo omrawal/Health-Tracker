@@ -39,4 +39,4 @@ def getStats(heightInCms, weightInKg, age, gender='male'):
     return(final_stats)
 
 
-print(getStats(heightInCms=813, weightInKg=89, age=21, gender='male'))
+# print(getStats(heightInCms=813, weightInKg=89, age=21, gender='male'))

@@ -2,11 +2,13 @@ from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.shortcuts import render, redirect
+from requests import api
 from .forms import StatisticCreate
 from .models import Statistic
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
+from .api_calls import getStats
 # Create your views here.
 # SUPERUSER credentails
 # username = admin
@@ -61,9 +63,19 @@ def registerPage(request):
 @login_required(login_url='login')
 def progressPage(request):
     context = {
-        'stats': Statistic.objects.filter(user=request.user)
+        'stats': Statistic.objects.filter(user=request.user).order_by('-timestamp')
     }
-    # return render(request, 'index.html', context)
+    data_list = []
+    for i in Statistic.objects.filter(user=request.user).order_by('-timestamp'):
+        api_dict = getStats(heightInCms=i.height,
+                            weightInKg=i.weight, age=i.age, gender=i.gender)
+        api_dict['date'] = i.timestamp.strftime('%d %b, %Y')
+        data_list.append(
+            api_dict)
+
+    context = {
+        'stats': data_list,
+    }
     return render(request, 'progress.html', context)
 
 
